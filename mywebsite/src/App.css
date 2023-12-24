@@ -1,0 +1,130 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+body {
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.tree {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.layer {
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 30px solid green;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.trunk {
+    width: 20px;
+    height: 80px;
+    background-color: #663300;
+}
+
+.star {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid yellow;
+    position: relative;
+    animation: blink 1s infinite;
+    margin-bottom: 0px;
+}
+
+.star:before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid yellow;
+    transform: rotate(35deg);
+}
+
+.star:after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid yellow;
+    transform: rotate(-35deg);
+}
+
+.ball {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: blink1 1s infinite;
+}
+
+@keyframes blink {
+    0% { border-bottom-color: yellow;}
+    50% { border-bottom-color: yellowgreen; }
+    100% { border-bottom-color: orange;}
+}
+@keyframes blink1 {
+    0% {  background-color: red;}
+    50% {  background-color: blue;}
+    100% { background-color:orangered;}
+}
