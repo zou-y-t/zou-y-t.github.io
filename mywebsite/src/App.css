@@ -118,6 +118,26 @@ body {
     animation: blink1 1s infinite;
 }
 
+.snowflake {
+  position: absolute;
+  background: white;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fall {
+  0% {
+    top: -10%;
+  }
+  100% {
+    top: 110%;
+  }
+}
+
 @keyframes blink {
     0% { border-bottom-color: yellow;}
     50% { border-bottom-color: yellowgreen; }
