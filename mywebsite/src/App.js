@@ -18,8 +18,8 @@ function App() {
   return (
     <>
       <body style={{backgroundColor: 'black'}} id="snowflakes" >
-        <h5 style={{ color: 'white' }}>HELLO Nuannuan,</h5>
-        <h1 style={{ color: 'white' }}>MERRY CHRISTMAS!</h1>
+        <h5 style={{ color: 'white' }}>HELLO,</h5>
+        <h1 style={{ color: 'white' }}>HAPPY NEW YEAR</h1>
         <div className="tree">
           <div className="star"></div>
           <div className="layer" style={{borderLeft: '30px solid transparent', borderRight: '30px solid transparent', borderBottom: '30px solid green'}}>
