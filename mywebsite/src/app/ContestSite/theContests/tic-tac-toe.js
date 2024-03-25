@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import {Link }from 'react-router-dom';
+import {Button} from'antd';
+import { RedoOutlined } from '@ant-design/icons';
 
 function TicTacToe() {
   const canvasRef = useRef(null);
@@ -76,9 +78,13 @@ function TicTacToe() {
 
   return (
     <div>
-        <canvas ref={canvasRef} width={300} height={300} onClick={handleClick} />
+        <center>
+          <canvas ref={canvasRef} width={300} height={300} onClick={handleClick} />
+        </center>
         <br/>
-        <button onClick={resetBoard}>RESET</button>
+        <center>
+          <Button onClick={resetBoard} icon={<RedoOutlined />} >RESET</Button>
+        </center>
     </div>
   );
 }
