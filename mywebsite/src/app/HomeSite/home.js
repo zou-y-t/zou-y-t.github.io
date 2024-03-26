@@ -65,7 +65,7 @@ const items = [
 
 
 function Home() {
-  const [current, setCurrent] = useState('mail');
+  const [current, setCurrent] = useState('');
   const onClick = (e) => {
     console.log('click ', e);
     setCurrent(e.key);

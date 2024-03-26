@@ -58,7 +58,7 @@ function TicTacToe() {
         context.strokeRect(x, y, 100, 100);
         const symbol = board[i * 3 + j];
         if (symbol) {
-            context.font = '48px serif'; // Set the font size
+            context.font = '48px bold'; // Set the font size
             const textWidth = context.measureText(symbol).width;
             const textHeight = 48; // This is a rough estimate
             const xCenter = x + 50 - textWidth / 2;
@@ -77,7 +77,7 @@ function TicTacToe() {
   }, [board, checkWinner]);
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <center>
           <canvas ref={canvasRef} width={300} height={300} onClick={handleClick} />
         </center>

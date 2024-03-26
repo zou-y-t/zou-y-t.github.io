@@ -13,6 +13,8 @@ import User from './app/UserSite/user';
 import Contest from './app/ContestSite/contest';
 import ErrorPage from './app/ErrorSite/errorPage';
 import Tictactoe from './app/ContestSite/theContests/tic-tac-toe'
+import Tictactoeplus from './app/ContestSite/theContests/tic-tac-toe-plus';
+import G2048 from './app/ContestSite/theContests/2048'
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,22 @@ const router = createBrowserRouter([
         children:[
           {
             path:"tictactoe",
+            element:<Tictactoe/>,
+          },
+          {
+            path:"tictactoeplus",
+            element:<Tictactoeplus/>,
+          },
+          {
+            path:"2048",
+            element:<G2048/>,
+          },
+          {
+            path:"gobang",
+            element:<Tictactoe/>,
+          },
+          {
+            path:"chess",
             element:<Tictactoe/>,
           }
         ]
