@@ -5,12 +5,12 @@ import { AppstoreOutlined, CheckSquareOutlined, BorderOuterOutlined, BorderInner
 import ContestHome from './contestHome';
 
 const items = [
-  {
-    label: "Contest Home",
-    key: 'game_home',
-    icon: <HomeOutlined />,
-    to: '/contest/contestHome',
-  },
+  // {
+  //   label: "Contest Home",
+  //   key: 'game_home',
+  //   icon: <HomeOutlined />,
+  //   to: '/contest/contestHome',
+  // },
   {
     label: "Tic Tac Toe",
     key: 'game_tictactoe',
