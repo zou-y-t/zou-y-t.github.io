@@ -10,11 +10,15 @@ import reportWebVitals from './reportWebVitals';
 
 import Home from './app/HomeSite/home';
 import User from './app/UserSite/user';
+import Contact from './app/ContactSite/contact_us';
 import Contest from './app/ContestSite/contest';
 import ErrorPage from './app/ErrorSite/errorPage';
+import ContestHome from './app/ContestSite/contestHome';
 import Tictactoe from './app/ContestSite/theContests/tic-tac-toe'
 import Tictactoeplus from './app/ContestSite/theContests/tic-tac-toe-plus';
 import G2048 from './app/ContestSite/theContests/2048'
+import GoBang from './app/ContestSite/theContests/goBang'
+import Chess from './app/ContestSite/theContests/chess'
 
 const router = createBrowserRouter([
   {
@@ -26,6 +30,10 @@ const router = createBrowserRouter([
         path:"contest",
         element:<Contest/>,
         children:[
+          {
+            path:"contestHome",
+            element:<ContestHome/>,
+          },
           {
             path:"tictactoe",
             element:<Tictactoe/>,
@@ -40,17 +48,21 @@ const router = createBrowserRouter([
           },
           {
             path:"gobang",
-            element:<Tictactoe/>,
+            element:<GoBang/>,
           },
           {
             path:"chess",
-            element:<Tictactoe/>,
+            element:<Chess/>,
           }
         ]
       },
       {
         path:"user",
         element:<User/>,
+      },
+      {
+        path:"contact",
+        element:<Contact/>,
       }
     ]
   },

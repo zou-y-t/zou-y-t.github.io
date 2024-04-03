@@ -15,6 +15,11 @@ function TicTacToe() {
   const [Xleft,setXleft] = useState(3);
   const [Oleft,setOleft] = useState(3);
   const [visible,setVisible] = useState(false);
+  const [winVisible,setWinVisible] = useState(false);
+
+  const [winner,setWinner] = useState(null);
+  const winVisibleRef = useRef(winVisible);
+  winVisibleRef.current = winVisible;
 
   const resetBoard = () => {
     setBoard(Array(9).fill(null));
@@ -24,21 +29,27 @@ function TicTacToe() {
     setXleft(3);
     setOleft(3);
     setVisible(false);
-  };
+    setWinVisible(false);
+    };
 
   const placePiece = () => {
     setStatus('PLACE');
     setMovingIndex(null);
-  };
+    };
 
   const movePiece = () =>{
     setStatus('MOVE');
     setMovingIndex(null);
-  };
+    };
 
   const handleInfoClose = () => {
     setVisible(false);
-  };
+    };
+
+  const handleWinClose = () => {
+    setWinVisible(false);
+    resetBoard();
+    };
 
   const checkWinner = useCallback(() => {
         const lines = [
@@ -64,73 +75,78 @@ function TicTacToe() {
     const row = Math.floor(y / 100);
     const col = Math.floor(x / 100);
     const index = row * 3 + col;
-    if(status === 'PLACE'){
-        //判断还有没有棋子
-        if(next === 'X' && Xleft === 0){
-            setVisible(true);
-            return;
-        }
-        if(next === 'O' && Oleft === 0){
-            setVisible(true);
-            return;
-        }
-
-        //有棋子的时候
-        if (board[index]) return;
-        setBoard(prev => {
-            const newBoard = [...prev];
-            newBoard[index] = next;
-            return newBoard;
-        });
-        setNext(prev => prev === 'X' ? 'O' : 'X');
-        //棋子数目减一
-        if(next === 'X'){
-            setXleft(prev => prev - 1);
-        }
-        else{
-            setOleft(prev => prev - 1);
-        }
+    if(winVisibleRef.current){
+        return;
     }
-    else if(status === 'MOVE'){
-        if(board[index] === next){
+    else{
+        if(status === 'PLACE'){
+            //判断还有没有棋子
+            if(next === 'X' && Xleft === 0){
+                setVisible(true);
+                return;
+            }
+            if(next === 'O' && Oleft === 0){
+                setVisible(true);
+                return;
+            }
+    
+            //有棋子的时候
+            if (board[index]) return;
             setBoard(prev => {
                 const newBoard = [...prev];
+                newBoard[index] = next;
                 return newBoard;
             });
-            setMovingIndex(index);
-        }else if(movingIndex !== null){
-            //若在棋盘上移动的距离为1
-            var canMove = false;
-            const lines=[
-                [0,1],[1,2],[3,4],[4,5],[6,7],[7,8],
-                [0,3],[3,6],[1,4],[4,7],[2,5],[5,8],
-                [0,4],[4,8],[2,4],[4,6],
-                [1,3],[3,7],[7,5],[5,1]
-            ];
-            for(let i = 0; i < lines.length; i++){
-                if((lines[i][0] === movingIndex && lines[i][1] === index)||(lines[i][1] === movingIndex && lines[i][0] === index)){
-                    canMove = true;
-                    break;
-                }
-            }
-
-            if(canMove){
-                if(board[index] === null){
-                    setBoard(prev => {
-                        const newBoard = [...prev];
-                        newBoard[index] = prev[movingIndex];
-                        newBoard[movingIndex] = null;
-                        return newBoard;
-                    });
-                    setMovingIndex(null);
-
-                    //移动成功了才会切换状态
-                    setNext(prev => prev === 'X' ? 'O' : 'X');
-                    setStatus('PLACE');
-                }
+            setNext(prev => prev === 'X' ? 'O' : 'X');
+            //棋子数目减一
+            if(next === 'X'){
+                setXleft(prev => prev - 1);
             }
             else{
-                //Do nothing
+                setOleft(prev => prev - 1);
+            }
+        }
+        else if(status === 'MOVE'){
+            if(board[index] === next){
+                setBoard(prev => {
+                    const newBoard = [...prev];
+                    return newBoard;
+                });
+                setMovingIndex(index);
+            }else if(movingIndex !== null){
+                //若在棋盘上移动的距离为1
+                var canMove = false;
+                const lines=[
+                    [0,1],[1,2],[3,4],[4,5],[6,7],[7,8],
+                    [0,3],[3,6],[1,4],[4,7],[2,5],[5,8],
+                    [0,4],[4,8],[2,4],[4,6],
+                    [1,3],[3,7],[7,5],[5,1]
+                ];
+                for(let i = 0; i < lines.length; i++){
+                    if((lines[i][0] === movingIndex && lines[i][1] === index)||(lines[i][1] === movingIndex && lines[i][0] === index)){
+                        canMove = true;
+                        break;
+                    }
+                }
+    
+                if(canMove){
+                    if(board[index] === null){
+                        setBoard(prev => {
+                            const newBoard = [...prev];
+                            newBoard[index] = prev[movingIndex];
+                            newBoard[movingIndex] = null;
+                            return newBoard;
+                        });
+                        setMovingIndex(null);
+    
+                        //移动成功了才会切换状态
+                        setNext(prev => prev === 'X' ? 'O' : 'X');
+                        setStatus('PLACE');
+                    }
+                }
+                else{
+                    //Do nothing
+                }
             }
         }
     }
@@ -141,7 +157,8 @@ function TicTacToe() {
     const context = canvas.getContext('2d');
     context.fillStyle = 'lightblue';
     context.fillRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < 3; i++) {
+    //获胜前才可以下棋
+    if(!winVisibleRef.current){for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         const x = j * 100;
         const y = i * 100;
@@ -168,19 +185,21 @@ function TicTacToe() {
             }
         }
       }
-    }
+    }}
 
     //判断输赢
     const winner = checkWinner();
     if (winner) {
-        alert(`Player ${winner} wins!`);
+        setWinVisible(true);
+        setWinner(winner);
     }
   }, [board, checkWinner, movingIndex]);
 
 return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <center>
-                {visible&&<Alert message="You have no pieces" type="info" closable afterClose={handleInfoClose}/>}
+                {visible && <Alert message="No more pieces left!" type="warning" closable afterClose={handleInfoClose}/>}
+                {winVisible && <Alert message={"Player " + winner + " wins!"} type="success" closable afterClose={handleWinClose}/>}
             </center>
             <br/>
             <center>

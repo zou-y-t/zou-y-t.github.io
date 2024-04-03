@@ -16,7 +16,7 @@ const items = [
     icon: <CustomerServiceOutlined />,
   },
   {
-    label: 'Contact Us',
+    label: (<Link to="/contact">Contact Us</Link>),
     key: 'mail',
     icon: <MailOutlined />,
   },
@@ -72,7 +72,6 @@ function Home() {
   };
   return (
     <div>
-
       <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
 
       <Outlet/>
