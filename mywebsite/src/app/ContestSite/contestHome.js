@@ -79,6 +79,18 @@ function ContestHome() {
 
         // scene.background = texture;
 
+        //添加点
+        const radius = 7;
+        const widthSegments = 18;
+        const heightSegments = 18;
+        const geometry1 = new THREE.SphereGeometry(radius, widthSegments, heightSegments);
+        const material1 = new THREE.PointsMaterial({
+            color: 'red',
+            size: 0.2,     // in world units
+        });
+        const points = new THREE.Points(geometry1, material1);
+        scene.add(points);
+
 
         camera.position.z = 5;
         camera.position.y = 2;
@@ -88,6 +100,8 @@ function ContestHome() {
 
             cube.rotation.x += 0.01;
             cube.rotation.y += 0.01;
+
+            points.rotation.y += 0.01;
 
             renderer.render(scene, camera);
         };
