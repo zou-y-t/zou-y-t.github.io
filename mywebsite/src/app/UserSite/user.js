@@ -274,9 +274,9 @@ function User() {
 
     return (
       <div>
-        {isLoading && <LoadingBar color='#f11946' ref={loadRef} />}
-        {!isLoading && <div ref={ref}/>}
-        {/* <div ref={ref}/> */}
+        {/* {isLoading && <LoadingBar color='#f11946' ref={loadRef} />}
+        {!isLoading && <div ref={ref}/>} */}
+        <div ref={ref}/>
       </div>
     );
 }
