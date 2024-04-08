@@ -97,6 +97,7 @@ function User() {
         const sunGeometry = new THREE.SphereGeometry(10, 32, 32);
         const sunTexture = loader.load('planet/sun.jpg');
         const sunMaterial = new THREE.MeshBasicMaterial({ map: sunTexture });
+        //const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
         const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial);
         sun.name = 'sun';
         sun.add(sunMesh);
@@ -115,128 +116,133 @@ function User() {
     }
 
     //添加金星
-    {
-        const venus=new THREE.Group();
-        venus.name='venus';
-        const venusOrbit = new THREE.Group();
-        const venusGeometry = new THREE.SphereGeometry(0.8, 32, 32);
-        const venusTexture = loader.load('planet/venus.jpg');
-        const venusMaterial = new THREE.MeshBasicMaterial({ map: venusTexture });
-        const venusMesh = new THREE.Mesh(venusGeometry, venusMaterial);
-        venus.add(venusMesh);
-        venusOrbit.add(venus);
-        scene.add(venusOrbit);
-        venus.position.y = 0;
-        venus.position.x = 20;
+    // {
+    //     const venus=new THREE.Group();
+    //     venus.name='venus';
+    //     const venusOrbit = new THREE.Group();
+    //     const venusGeometry = new THREE.SphereGeometry(0.8, 32, 32);
+    //     const venusTexture = loader.load('planet/venus.jpg');
+    //     const venusMaterial = new THREE.MeshBasicMaterial({ map: venusTexture });
+    //     //const venusMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    //     const venusMesh = new THREE.Mesh(venusGeometry, venusMaterial);
+    //     venus.add(venusMesh);
+    //     venusOrbit.add(venus);
+    //     scene.add(venusOrbit);
+    //     venus.position.y = 0;
+    //     venus.position.x = 20;
 
-        const animate = function () {
-          venusOrbit.rotation.y += 0.006;
-          renderer.render(scene, camera);
-          requestAnimationFrame(animate);
-        }
-        animate();
-    }
+    //     const animate = function () {
+    //       venusOrbit.rotation.y += 0.006;
+    //       renderer.render(scene, camera);
+    //       requestAnimationFrame(animate);
+    //     }
+    //     animate();
+    // }
 
     //添加水星
-    {
-        const mercury=new THREE.Group();
-        mercury.name='mercury';
-        const mercuryOrbit = new THREE.Group();
-        const mercuryGeometry = new THREE.SphereGeometry(1.2, 32, 32);
-        const mercuryTexture = loader.load('planet/mercury.jpg');
-        const mercuryMaterial = new THREE.MeshBasicMaterial({ map: mercuryTexture });
-        const mercuryMesh = new THREE.Mesh(mercuryGeometry, mercuryMaterial);
-        mercury.add(mercuryMesh);
-        mercuryOrbit.add(mercury);
-        scene.add(mercuryOrbit);
-        mercury.position.y = 0;
-        mercury.position.x = 15;
+    // {
+    //     const mercury=new THREE.Group();
+    //     mercury.name='mercury';
+    //     const mercuryOrbit = new THREE.Group();
+    //     const mercuryGeometry = new THREE.SphereGeometry(1.2, 32, 32);
+    //     const mercuryTexture = loader.load('planet/mercury.jpg');
+    //     const mercuryMaterial = new THREE.MeshBasicMaterial({ map: mercuryTexture });
+    //     //const mercuryMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    //     const mercuryMesh = new THREE.Mesh(mercuryGeometry, mercuryMaterial);
+    //     mercury.add(mercuryMesh);
+    //     mercuryOrbit.add(mercury);
+    //     scene.add(mercuryOrbit);
+    //     mercury.position.y = 0;
+    //     mercury.position.x = 15;
 
-        const animate = function () {
-          mercuryOrbit.rotation.y += 0.01;
-          renderer.render(scene, camera);
-          requestAnimationFrame(animate);
-        }
-        animate();
-    }
+    //     const animate = function () {
+    //       mercuryOrbit.rotation.y += 0.01;
+    //       renderer.render(scene, camera);
+    //       requestAnimationFrame(animate);
+    //     }
+    //     animate();
+    // }
 
     //添加火星
-    {
-        const mars=new THREE.Group();
-        mars.name='mars';
-        const marsOrbit = new THREE.Group();
-        const marsGeometry = new THREE.SphereGeometry(1.5, 32, 32);
-        const marsTexture = loader.load('planet/mars.jpg');
-        const marsMaterial = new THREE.MeshBasicMaterial({ map: marsTexture });
-        const marsMesh = new THREE.Mesh(marsGeometry, marsMaterial);
-        mars.add(marsMesh);
-        marsOrbit.add(mars);
-        scene.add(marsOrbit);
-        mars.position.y = 0;
-        mars.position.x = 35;
+    // {
+    //     const mars=new THREE.Group();
+    //     mars.name='mars';
+    //     const marsOrbit = new THREE.Group();
+    //     const marsGeometry = new THREE.SphereGeometry(1.5, 32, 32);
+    //     const marsTexture = loader.load('planet/mars.jpg');
+    //     const marsMaterial = new THREE.MeshBasicMaterial({ map: marsTexture });
+    //     //const marsMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    //     const marsMesh = new THREE.Mesh(marsGeometry, marsMaterial);
+    //     mars.add(marsMesh);
+    //     marsOrbit.add(mars);
+    //     scene.add(marsOrbit);
+    //     mars.position.y = 0;
+    //     mars.position.x = 35;
 
-        const animate = function () {
-          marsOrbit.rotation.y += 0.002;
-          renderer.render(scene, camera);
-          requestAnimationFrame(animate);
-        }
-        animate();
-    }
+    //     const animate = function () {
+    //       marsOrbit.rotation.y += 0.002;
+    //       renderer.render(scene, camera);
+    //       requestAnimationFrame(animate);
+    //     }
+    //     animate();
+    // }
 
     //添加木星
-    {
-        const jupiter=new THREE.Group();
-        jupiter.name='jupiter';
-        const jupiterOrbit = new THREE.Group();
-        const jupiterGeometry = new THREE.SphereGeometry(4, 32, 32);
-        const jupiterTexture = loader.load('planet/jupiter.jpg');
-        const jupiterMaterial = new THREE.MeshBasicMaterial({ map: jupiterTexture });
-        const jupiterMesh = new THREE.Mesh(jupiterGeometry, jupiterMaterial);
-        jupiter.add(jupiterMesh);
-        jupiterOrbit.add(jupiter);
-        scene.add(jupiterOrbit);
-        jupiter.position.y = 0;
-        jupiter.position.x = 45;
+    // {
+    //     const jupiter=new THREE.Group();
+    //     jupiter.name='jupiter';
+    //     const jupiterOrbit = new THREE.Group();
+    //     const jupiterGeometry = new THREE.SphereGeometry(4, 32, 32);
+    //     const jupiterTexture = loader.load('planet/jupiter.jpg');
+    //     const jupiterMaterial = new THREE.MeshBasicMaterial({ map: jupiterTexture });
+    //     //const jupiterMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    //     const jupiterMesh = new THREE.Mesh(jupiterGeometry, jupiterMaterial);
+    //     jupiter.add(jupiterMesh);
+    //     jupiterOrbit.add(jupiter);
+    //     scene.add(jupiterOrbit);
+    //     jupiter.position.y = 0;
+    //     jupiter.position.x = 45;
 
-        const animate = function () {
-          jupiterOrbit.rotation.y += 0.001;
-          renderer.render(scene, camera);
-          requestAnimationFrame(animate);
-        }
-        animate();
-    }
+    //     const animate = function () {
+    //       jupiterOrbit.rotation.y += 0.001;
+    //       renderer.render(scene, camera);
+    //       requestAnimationFrame(animate);
+    //     }
+    //     animate();
+    // }
 
     //添加土星
-    {
-        const saturn=new THREE.Group();
-        saturn.name='saturn';
-        const saturnOrbit = new THREE.Group();
-        const saturnGeometry = new THREE.SphereGeometry(2, 32, 32);
-        const saturnTexture = loader.load('planet/saturn.jpg');
-        const saturnMaterial = new THREE.MeshBasicMaterial({ map: saturnTexture });
-        const saturnMesh = new THREE.Mesh(saturnGeometry, saturnMaterial);
-        saturn.add(saturnMesh);
-        saturnOrbit.add(saturn);
-        scene.add(saturnOrbit);
-        saturn.position.y = 0;
-        saturn.position.x = 55;
+    // {
+    //     const saturn=new THREE.Group();
+    //     saturn.name='saturn';
+    //     const saturnOrbit = new THREE.Group();
+    //     const saturnGeometry = new THREE.SphereGeometry(2, 32, 32);
+    //     const saturnTexture = loader.load('planet/saturn.jpg');
+    //     const saturnMaterial = new THREE.MeshBasicMaterial({ map: saturnTexture });
+    //     //const saturnMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    //     const saturnMesh = new THREE.Mesh(saturnGeometry, saturnMaterial);
+    //     saturn.add(saturnMesh);
+    //     saturnOrbit.add(saturn);
+    //     scene.add(saturnOrbit);
+    //     saturn.position.y = 0;
+    //     saturn.position.x = 55;
 
-        //添加土星的环
-        const ringGeometry = new THREE.RingGeometry(2.5, 3.5, 32);
-        const ringTexture = loader.load('planet/saturn_ring.png');
-        const ringMaterial = new THREE.MeshBasicMaterial({ map: ringTexture, side: THREE.DoubleSide });
-        const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-        ring.rotation.x = Math.PI / 2;
-        saturn.add(ring);
+    //     //添加土星的环
+    //     const ringGeometry = new THREE.RingGeometry(2.5, 3.5, 32);
+    //     const ringTexture = loader.load('planet/saturn_ring.png');
+    //     const ringMaterial = new THREE.MeshBasicMaterial({ map: ringTexture, side: THREE.DoubleSide });
+    //     const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+    //     ring.rotation.x = Math.PI / 2;
+    //     saturn.add(ring);
 
-        const animate = function () {
-          saturnOrbit.rotation.y += 0.0008;
-          ring.rotation.y += 0.0008;
-          renderer.render(scene, camera);
-          requestAnimationFrame(animate);
-        }
-        animate();
-    }
+    //     const animate = function () {
+    //       saturnOrbit.rotation.y += 0.0008;
+    //       ring.rotation.y += 0.0008;
+    //       renderer.render(scene, camera);
+    //       requestAnimationFrame(animate);
+    //     }
+    //     animate();
+    // }
 
     //添加控制器
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -268,9 +274,9 @@ function User() {
 
     return (
       <div>
-        {/* {isLoading && <LoadingBar color='#f11946' ref={loadRef} />}
-        {!isLoading && <div ref={ref}/>} */}
-        <div ref={ref}/>
+        {isLoading && <LoadingBar color='#f11946' ref={loadRef} />}
+        {!isLoading && <div ref={ref}/>}
+        {/* <div ref={ref}/> */}
       </div>
     );
 }
