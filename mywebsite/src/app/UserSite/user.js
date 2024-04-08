@@ -25,7 +25,7 @@ function User() {
     const renderer = new THREE.WebGLRenderer(false);
   
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.shadowMap.enabled = true;//开启阴影
+    //renderer.shadowMap.enabled = false;//不开启阴影
     if(ref.current){
       ref.current.appendChild(renderer.domElement);
     }
@@ -254,23 +254,23 @@ function User() {
   }, [isOnLoad]);
 
   useEffect(()=>{
-    if(isOnLoad===100){
-      setIsLoading(false);
-      loadRef.current.complete();
-    }
-    else{
-      setIsLoading(true);
-      loadRef.current.continuousStart(isOnLoad);
+    if(loadRef.current){
+      if(isOnLoad===100){
+        setIsLoading(false);
+        loadRef.current.complete();
+      }
+      else{
+        setIsLoading(true);
+        loadRef.current.continuousStart(isOnLoad);
+      }
     }
   },[isOnLoad])
 
     return (
       <div>
-      {isLoading ? (
-        <LoadingBar color='#f11946' ref={loadRef} />
-      ) : (
-        <div ref={ref} />
-      )}
+        {isLoading && <LoadingBar color='#f11946' ref={loadRef} />}
+        {!isLoading && <div ref={ref}/>}
+        {/* <div ref={ref}/> */}
       </div>
     );
 }
