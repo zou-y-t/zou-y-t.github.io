@@ -1,28 +1,44 @@
 import React from 'react';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import LoadingBar from 'react-top-loading-bar';
 
 function User() {
 
+  // const [isOnLoad, setIsOnLoad] = useState(0);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const ref = useRef(null);
+  // const loadRef = useRef(null);
+
   const [isOnLoad, setIsOnLoad] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const ref = useRef(null);
   const loadRef = useRef(null);
 
-  useEffect(() => {
-    const manager = new THREE.LoadingManager();
-    manager.onProgress = function (item, loaded, total) {
-      setIsOnLoad((loaded / total)*100);
-    };
-    manager.onLoad = function () {
-      setIsLoading(false);
-    };
+  const managerRef = useRef(new THREE.LoadingManager());
+  const sceneRef = useRef(new THREE.Scene());
+  const cameraRef = useRef(new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000));
+  const rendererRef = useRef(new THREE.WebGLRenderer(false));
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer(false);
+  const onProgress = useCallback((item, loaded, total) => {
+    requestAnimationFrame(() => {
+      setIsOnLoad((loaded / total)*100);
+    });
+  }, []);
+
+  const onLoad = useCallback(() => {
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    const manager = managerRef.current;
+    manager.onProgress = onProgress;
+    manager.onLoad = onLoad;
+
+    const scene = sceneRef.current;
+    const camera = cameraRef.current;
+    const renderer = rendererRef.current;
   
     renderer.setSize(window.innerWidth, window.innerHeight);
     //renderer.shadowMap.enabled = false;//不开启阴影
@@ -76,7 +92,7 @@ function User() {
 
       const animate = function () {
         //公转
-        earthOrbit.rotation.y += 0.003;
+        earthOrbit.rotation.y += 0.003*(1/3);
 
         //自转
         dayMaterial.map.offset.x += 0.0004;
@@ -257,7 +273,7 @@ function User() {
         renderer.render(scene, camera);
     };
     animate();
-  }, [isOnLoad]);
+  }, [onProgress, onLoad]);
 
   useEffect(()=>{
     if(loadRef.current){
