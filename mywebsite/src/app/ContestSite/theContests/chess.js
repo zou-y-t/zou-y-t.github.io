@@ -93,19 +93,6 @@ function Piece(props){
   const pieceRef = useRef();
   const { x, y, name, color, onLoad } = props;
 
-  // useEffect(() => {
-  //     const loader = new STLLoader();
-  //     loader.load("/Contests_Modules/chess/"+name+".stl", (geometry) => {
-  //         pieceRef.current.geometry = geometry;
-  //         pieceRef.current.material = new MeshPhongMaterial({
-  //             color: color,
-  //             specular: "white",
-  //             shininess: 100,
-  //         });
-  //         pieceRef.current.scale.set(0.02, 0.02, 0.02);
-  //     });
-  // }, [name, color]);
-
   const geometry=useLoader(STLLoader,"/Contests_Modules/chess/"+name+".stl");
   
 
