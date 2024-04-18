@@ -3,7 +3,7 @@ import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls, Line } from "@react-three/drei";
 import * as THREE from "three";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
-import { EdgesGeometry, LineSegments, LineBasicMaterial, MeshPhongMaterial } from "three";
+import { MeshPhongMaterial } from "three";
 import { Progress} from "antd";
 
 function Box() {
