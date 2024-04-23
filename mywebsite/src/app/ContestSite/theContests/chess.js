@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 import { MeshPhongMaterial } from "three";
 import { Progress} from "antd";
+import ChessLogic from "./chessLogic";
 
 function Piece(props){
   const pieceRef = useRef();
@@ -72,8 +73,32 @@ function Piece(props){
 
       } else if(selectedPlace && moveState ===true){
           //若是终点
+          //留着下次debug的时候用
+          // console.log("start: "+(selectedPiece.position.y+3.5)+","+(selectedPiece.position.x+3.5));
+          // console.log("end: "+(selectedPlace[1]+3.5)+","+(selectedPlace[0]+3.5));
+          // console.log("player: "+player);
+          // console.log("name: "+selectedPiece.name);
+          // console.log("board: "+board);
+          // console.log("end: "+(board[selectedPlace[1]+3.5][selectedPlace[0]+3.5]).length);
+          // console.log(typeof board[selectedPlace[1]+3.5][selectedPlace[0]+3.5]);
+          // console.log("end: "+board[selectedPlace[1]+3.5][selectedPlace[0]+3.5]);
+          // console.log("end: "+JSON.stringify(board[selectedPlace[1]+3.5][selectedPlace[0]+3.5]));
+          // console.log(ChessLogic([selectedPiece.position.y+3.5,selectedPiece.position.x+3.5],
+          //   [selectedPlace[1]+3.5,selectedPlace[0]+3.5],
+          //   selectedPiece.name,
+          //   board,
+          //   player));
+          if(ChessLogic([selectedPiece.position.y+3.5,selectedPiece.position.x+3.5],
+            [selectedPlace[1]+3.5,selectedPlace[0]+3.5],
+            selectedPiece.name,
+            board,
+            player)===false){
+            //若不符合规则
+            //do nothing
+            return ;
+          }
           //若board的对应位置没有棋子
-          if(board[selectedPlace[1]+3.5][selectedPlace[0]+3.5].length === 0){
+          else if(board[selectedPlace[1]+3.5][selectedPlace[0]+3.5].length === 0){
             setMoveState(false);
             setSelectedPiece(null);
             setPlayer(player === "white" ? "black" : "white");
@@ -82,7 +107,7 @@ function Piece(props){
             setBoard(board);
             setSelectedPlace(null);
           }
-          //若board的对应位置有棋子
+          //若board的对应位置有敌方棋子
           else{
             if(board[selectedPlace[1]+3.5][selectedPlace[0]+3.5][1] !== player){
               setMoveState(false);
