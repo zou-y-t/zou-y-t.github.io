@@ -12,11 +12,12 @@ function PythonLib(props) {
     const [packageName, setPackageName] = React.useState('');
     return (
         <div style={{ width: '100%', height: '100%', textAlign: 'left'}}>
-        <Card title="Python Packages" style={{ width: '100%', height: '100%',backgroundColor: '#800080'}}>
+        <Card title="Python Packages" style={{ width: '100%', height: '100%',backgroundColor: 'rgb(91,178,251)'}}>
             <Row justify='start'>
                 <Col span={3}> 
                     <Button 
                         type="primary"
+                        style={{backgroundColor:(props.pyodide?'green':"red")}}
                         onClick={() => {
                             props.onStatusChange('Numpy loading...');
                             props.handleIsError(false);
@@ -32,6 +33,7 @@ function PythonLib(props) {
                 <Col span={3}>
                     <Button 
                         type="primary"
+                        style={{backgroundColor:(props.pyodide?'green':"red")}}
                         onClick={() => {
                             props.onStatusChange('Pandas loading...');
                             props.handleIsError(false);
@@ -47,6 +49,7 @@ function PythonLib(props) {
                 <Col span={3}>
                     <Button 
                         type="primary"
+                        style={{backgroundColor:(props.pyodide?'green':"red")}}
                         onClick={() => {
                             props.onStatusChange('Matplotlib loading...');
                             props.handleIsError(false);
@@ -65,6 +68,7 @@ function PythonLib(props) {
                 <Col span={3}>
                     <Button 
                         type="primary"
+                        style={{backgroundColor:(props.pyodide?'green':"red")}}
                         onClick={() => {
                             props.onStatusChange('Scipy loading...');
                             props.handleIsError(false);
@@ -80,6 +84,7 @@ function PythonLib(props) {
                 <Col span={3}>
                     <Button 
                         type="primary"
+                        style={{backgroundColor:(props.pyodide?'green':"red")}}
                         onClick={() => {
                             props.onStatusChange('Scikit-learn loading...');
                             props.handleIsError(false);
@@ -95,6 +100,7 @@ function PythonLib(props) {
                 <Col span={3}>
                     <Button
                         type="primary"
+                        style={{backgroundColor:(props.pyodide?'green':"red")}}
                         onClick={() => {
                             props.onStatusChange('OpenCV loading...');
                             props.handleIsError(false);
