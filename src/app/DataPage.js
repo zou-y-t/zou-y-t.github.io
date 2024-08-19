@@ -1,7 +1,10 @@
-import React, { useState} from 'react';
-import { Table, Menu, Input } from 'antd';
+import React, { useEffect, useRef, useState} from 'react';
+import { Table, Menu, Input, Radio } from 'antd';
 import GetDataByUrl from '../Component/GetDataByUrl';
 import '../css/DataPage.css';
+import { Chart, registerables } from 'chart.js';
+
+Chart.register(...registerables);
 
 const DataPage = () => {
     const [data, setData] = useState([]);
@@ -14,6 +17,9 @@ const DataPage = () => {
     const [filteredData, setFilteredData] = useState([]);
     const [menuName, setMenuName] = useState('');
     const [isSubInfo, setIsSubInfo] = useState(false);
+    const chartRef = useRef(null);
+    const chartInstance = useRef(null);
+    const [chartDataName, setChartDataName] = useState('close');
 
     const handleMenuClick = (e) => {
         setSearchText('');
@@ -67,6 +73,54 @@ const DataPage = () => {
             setUrl(theUrl);
         }
     };
+
+    useEffect(() => {
+        if(isSubInfo&&chartRef.current){
+            const ctx = chartRef.current.getContext('2d');
+            chartInstance.current = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [...data].reverse().map(record => record['trade_date']),
+                    datasets: [{
+                        label: chartDataName,
+                        data: [...data].reverse().map(record => record[chartDataName]),
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        fill: false,
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: chartDataName
+                        }
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Price'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+    ,[data, isSubInfo, chartDataName]);
+
 
     return (
         <div style={{ display: 'flex' }}>
@@ -132,6 +186,33 @@ const DataPage = () => {
                             };
                         }}
                     />
+                    {isSubInfo && 
+                        <Radio.Group 
+                            onChange={e => {
+                                setChartDataName(e.target.value);
+                                if (chartInstance.current) {
+                                    chartInstance.current.destroy();
+                                }
+                            }} 
+                            value={chartDataName}
+                        >
+                            <Radio value="open">open</Radio>
+                            <Radio value="high">high</Radio>
+                            <Radio value="low">low</Radio>
+                            <Radio value="close">close</Radio>
+                            <Radio value="pre_close">pre_close</Radio>
+                            <Radio value="change">change</Radio>
+                            <Radio value="pct_chg">pct_chg</Radio>
+                            <Radio value="vol">vol</Radio>
+                            <Radio value="amount">amount</Radio>
+                        </Radio.Group>
+
+                    }
+                    {isSubInfo && 
+                        <canvas
+                            ref={chartRef}
+                        />
+                    }
                 </>
                 }
                 {loading && <p>Loading...</p>}
