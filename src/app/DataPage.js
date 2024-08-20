@@ -1,10 +1,28 @@
 import React, { useEffect, useRef, useState} from 'react';
-import { Table, Menu, Input, Radio } from 'antd';
+import { Table, Menu, Input, Checkbox } from 'antd';
+import{
+    StockOutlined,
+}
+from '@ant-design/icons';
 import GetDataByUrl from '../Component/GetDataByUrl';
+import Loading from '../Component/Loading';
 import '../css/DataPage.css';
 import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
+
+const chartItemsColor = {
+    open: 'rgba(255, 99, 132, 1)',
+    high: 'rgba(54, 162, 235, 1)',
+    low: 'rgba(255, 206, 86, 1)',
+    close: 'rgba(75, 192, 192, 1)',
+    pre_close: 'rgba(153, 102, 255, 1)',
+    change: 'rgba(255, 159, 64, 1)',
+    pct_chg: 'rgba(255, 99, 132, 1)',
+    vol: 'rgba(0, 0, 0, 1)',
+    amount: 'rgba(0, 100, 0, 1)',
+};
+
 
 const DataPage = () => {
     const [data, setData] = useState([]);
@@ -19,7 +37,8 @@ const DataPage = () => {
     const [isSubInfo, setIsSubInfo] = useState(false);
     const chartRef = useRef(null);
     const chartInstance = useRef(null);
-    const [chartDataName, setChartDataName] = useState('close');
+    const [chartDataName, setChartDataName] = useState(['close']);
+
 
     const handleMenuClick = (e) => {
         setSearchText('');
@@ -74,6 +93,7 @@ const DataPage = () => {
         }
     };
 
+    //图表
     useEffect(() => {
         if(isSubInfo&&chartRef.current){
             const ctx = chartRef.current.getContext('2d');
@@ -81,13 +101,15 @@ const DataPage = () => {
                 type: 'line',
                 data: {
                     labels: [...data].reverse().map(record => record['trade_date']),
-                    datasets: [{
-                        label: chartDataName,
-                        data: [...data].reverse().map(record => record[chartDataName]),
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1,
-                        fill: false,
-                    }]
+                    datasets: chartDataName.map(name => {
+                        return {
+                            label: name,
+                            data: [...data].reverse().map(record => record[name]),
+                            borderColor: chartItemsColor[name],
+                            borderWidth: 1,
+                            fill: false,
+                        };
+                    })
                 },
                 options: {
                     plugins: {
@@ -96,7 +118,7 @@ const DataPage = () => {
                         },
                         title: {
                             display: true,
-                            text: chartDataName
+                            text: chartDataName.join(', ')
                         }
                     },
                     scales: {
@@ -111,7 +133,7 @@ const DataPage = () => {
                             display: true,
                             title: {
                                 display: true,
-                                text: 'Price'
+                                text: chartDataName.join(', ')
                             }
                         }
                     }
@@ -187,25 +209,70 @@ const DataPage = () => {
                         }}
                     />
                     {isSubInfo && 
-                        <Radio.Group 
-                            onChange={e => {
-                                setChartDataName(e.target.value);
+                        <Checkbox.Group 
+                            onChange={checkedValues => {
+                                setChartDataName(checkedValues);
                                 if (chartInstance.current) {
                                     chartInstance.current.destroy();
                                 }
                             }} 
                             value={chartDataName}
                         >
-                            <Radio value="open">open</Radio>
-                            <Radio value="high">high</Radio>
-                            <Radio value="low">low</Radio>
-                            <Radio value="close">close</Radio>
-                            <Radio value="pre_close">pre_close</Radio>
-                            <Radio value="change">change</Radio>
-                            <Radio value="pct_chg">pct_chg</Radio>
-                            <Radio value="vol">vol</Radio>
-                            <Radio value="amount">amount</Radio>
-                        </Radio.Group>
+                            <Checkbox 
+                                value="open"
+                            >
+                                open
+                                <StockOutlined style={{ color: chartItemsColor['open'] }} />
+                            </Checkbox>
+                            <Checkbox
+                                value="high"
+                            >
+                                high
+                                <StockOutlined style={{ color: chartItemsColor['high'] }} />
+                            </Checkbox>
+                            <Checkbox
+                                value="low"
+                            >
+                                low
+                                <StockOutlined style={{ color: chartItemsColor['low'] }} />
+                            </Checkbox>
+                            <Checkbox
+                                value="close"
+                            >
+                                close
+                                <StockOutlined style={{ color: chartItemsColor['close'] }} />
+                            </Checkbox>
+                            <Checkbox
+                                value="pre_close"
+                            >
+                                pre_close
+                                <StockOutlined style={{ color: chartItemsColor['pre_close'] }} />
+                            </Checkbox>
+                            <Checkbox 
+                                value="change"
+                            >
+                                change
+                                <StockOutlined style={{ color: chartItemsColor['change'] }} />
+                            </Checkbox>
+                            <Checkbox 
+                                value="pct_chg"
+                            >
+                                pct_chg
+                                <StockOutlined style={{ color: chartItemsColor['pct_chg'] }} />
+                            </Checkbox>
+                            <Checkbox 
+                                value="vol"
+                            >
+                                vol
+                                <StockOutlined style={{ color: chartItemsColor['vol'] }} />
+                            </Checkbox>
+                            <Checkbox 
+                                value="amount"
+                            >
+                                amount
+                                <StockOutlined style={{ color: chartItemsColor['amount'] }} />
+                            </Checkbox>
+                        </Checkbox.Group>
 
                     }
                     {isSubInfo && 
@@ -215,7 +282,7 @@ const DataPage = () => {
                     }
                 </>
                 }
-                {loading && <p>Loading...</p>}
+                {loading && <Loading />}
                 {error && <p style={{ color: 'red' }}>{error.message}</p>}
             </div>
         </div>
