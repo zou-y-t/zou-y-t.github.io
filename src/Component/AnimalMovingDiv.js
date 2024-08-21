@@ -67,7 +67,7 @@ const AnimalMovingDiv = ({animalIndex, children}) => {
             style={{
             position: 'absolute',
             left: position.x -(isFlipped ? imageWidth-32 : 0), // 根据鼠标位置设置图片位置,32是鼠标图片的宽度
-            top: position.y - imageHeight / 2 -16,
+            top: position.y - imageHeight,
             transition: 'left 0.1s, top 0.1s',
             width: `${imageWidth}px`, // 设置图片宽度
             height: `${imageHeight}px`, // 设置图片高度
