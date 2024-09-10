@@ -48,7 +48,7 @@ const DataPage = () => {
         setLoading(true);
         setError(null);
         setStartQuery(true);
-        setUrl("https://cloud.tsinghua.edu.cn/d/278a516b63444cf89b7c/files/?p=%2F"+e.key+"&dl=1");
+        setUrl(e.key);
         setMenuName(e.key);
         setIsSubInfo(false);
     };
@@ -68,25 +68,25 @@ const DataPage = () => {
             setStartQuery(true);
             let theUrl = "";
             if(symbolInt<=2297){
-                theUrl = "https://cloud.tsinghua.edu.cn/d/278a516b63444cf89b7c/files/?p=%2Fstock_data_2023%2Fstock_data_2023_1%2F"+record['stock_code']+"_2023.csv&dl=1";
+                theUrl = "stock_data_2023/stock_data_2023_1/"+record['stock_code']+"_2023.csv";
             }
             else if(symbolInt<=300114){
-                theUrl = "https://cloud.tsinghua.edu.cn/d/278a516b63444cf89b7c/files/?p=%2Fstock_data_2023%2Fstock_data_2023_2%2F"+record['stock_code']+"_2023.csv&dl=1";
+                theUrl = "stock_data_2023/stock_data_2023_2/"+record['stock_code']+"_2023.csv&";
             }
             else if(symbolInt<=300952){
-                theUrl = "https://cloud.tsinghua.edu.cn/d/278a516b63444cf89b7c/files/?p=%2Fstock_data_2023%2Fstock_data_2023_3%2F"+record['stock_code']+"_2023.csv&dl=1";
+                theUrl = "stock_data_2023/stock_data_2023_3/"+record['stock_code']+"_2023.csv";
             }
             else if(symbolInt<=600479){
-                theUrl = "https://cloud.tsinghua.edu.cn/d/278a516b63444cf89b7c/files/?p=%2Fstock_data_2023%2Fstock_data_2023_4%2F"+record['stock_code']+"_2023.csv&dl=1";
+                theUrl = "stock_data_2023/stock_data_2023_4/"+record['stock_code']+"_2023.csv";
             }
             else if(symbolInt<=603201){
-                theUrl = "https://cloud.tsinghua.edu.cn/d/278a516b63444cf89b7c/files/?p=%2Fstock_data_2023%2Fstock_data_2023_5%2F"+record['stock_code']+"_2023.csv&dl=1";
+                theUrl = "stock_data_2023/stock_data_2023_5/"+record['stock_code']+"_2023.csv";
             }
             else if(symbolInt<=688315){
-                theUrl = "https://cloud.tsinghua.edu.cn/d/278a516b63444cf89b7c/files/?p=%2Fstock_data_2023%2Fstock_data_2023_6%2F"+record['stock_code']+"_2023.csv&dl=1";
+                theUrl = "stock_data_2023/stock_data_2023_6/"+record['stock_code']+"_2023.csv";
             }
             else{
-                theUrl = "https://cloud.tsinghua.edu.cn/d/278a516b63444cf89b7c/files/?p=%2Fstock_data_2023%2Fstock_data_2023_7%2F"+record['stock_code']+"_2023.csv&dl=1";
+                theUrl = "stock_data_2023/stock_data_2023_7/"+record['stock_code']+"_2023.csv";
             }
 
             setUrl(theUrl);

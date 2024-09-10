@@ -16,29 +16,19 @@ function GetDataByUrl({ url, setData, setIsLoading, setError, setColums, startQu
         if (!startQuery) {
             return;
         }
-        console.log('Fetching data from:', url);
-        // 使用其他公共 CORS 代理
-        const proxyUrl = 'https://api.allorigins.win/get?url=';
-        const targetUrl = encodeURIComponent(url);
 
-        fetch(proxyUrl + targetUrl)
+        
+
+        console.log('Fetching data from:', url);
+
+        fetch(`${process.env.PUBLIC_URL}/Data/${url}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.json();
+                return response.text();
             })
-            .then(data => {
-                // 去掉前缀 "data:application/octet-stream;base64,"
-                const base64String = data.contents.split(',')[1];
-                // 确保 Base64 字符串长度为 4 的倍数
-                let paddedBase64String = base64String;
-                while (paddedBase64String.length % 4 !== 0) {
-                    paddedBase64String += '=';
-                }
-                // 解码 Base64 字符串
-                const byteArray = toByteArray(paddedBase64String);
-                const csvText = new TextDecoder().decode(byteArray);
+            .then(csvText=>{
                 // 使用 PapaParse 解析 CSV 数据
                 const parsedData = Papa.parse(csvText, { header: true });
                 console.log(parsedData.data); // 调试信息
