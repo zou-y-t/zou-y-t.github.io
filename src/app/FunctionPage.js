@@ -1,101 +1,96 @@
 import React, { useEffect, useState } from 'react';
-import ReactMarkdown from 'react-markdown';
-import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
-import rehypeHighlight from 'rehype-highlight';
-import { Controlled as CodeMirror } from 'react-codemirror2';
-import { message } from 'antd';
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/material.css';
-import 'codemirror/mode/python/python';
-import 'katex/dist/katex.min.css';
-import 'highlight.js/styles/github.css';
-import '../css/FunctionPage.css';
+import MyReactMarkdown from '../Component/MyReactMarkdown';
+import { message, Card, Menu } from 'antd';
+
+const { SubMenu } = Menu;
 
 function FunctionPage() {
     const [markdown, setMarkdown] = useState('');
+    const [noteUrl, setNoteUrl] = useState('Notes/MyFirstQuantNote/');
+    const [fileName, setFileName] = useState('Quant_4.md');
 
     useEffect(() => {
-        fetch(`${process.env.PUBLIC_URL}/Notes/MyFirstQuantNote/Quant_4.md`)
+        fetch(`${process.env.PUBLIC_URL}/`+noteUrl+fileName)
             .then(response => response.text())
             .then(text => setMarkdown(text));
-    }, []);
+    }, [setMarkdown, noteUrl, fileName]);
 
-    const handleCopy = (text) => {
-        navigator.clipboard.writeText(text);
-        message.success('copied successfully!'); 
-    };
+    const handleMenuClick = (e) => {
+        //路径
+        const url=e.key.toString().split('/').slice(0,-1).join('/');
+        //文件名
+        const fileName=e.key.toString().split('/')[1];
+        setNoteUrl('Notes/'+url+'/');
+        setFileName(fileName);
+    }
 
     return (
-        <div>
-            <ReactMarkdown
-                children={markdown}
-                remarkPlugins={[remarkMath]}
-                rehypePlugins={[rehypeKatex, rehypeHighlight]}
-                components={{
-                    code({ node, inline, className, children, ...props }) {
-                        const match = /language-(\w+)/.exec(className || '');
-                        const language = match ? match[1] : 'python';
-                        let codeString = '';
-
-                        if (Array.isArray(children)) {
-                            codeString = children.map((child) => {
-                                if (typeof child === 'string') {
-                                    return child;
-                                } else if (typeof child === 'object' && child.props && child.props.children) {
-                                    return child.props.children;
-                                }
-                                return '';
-                            }).join('');
-                        } else if (typeof children === 'string') {
-                            codeString = children;
-                        } else if (typeof children === 'object' && children.props && children.props.children) {
-                            codeString = children.props.children;
-                        }
-
-                        const lineCount = codeString.split('\n').length;
-                        console.log(lineCount);
-
-                        return !inline ? (
-                            <div style={{ position: 'relative', marginBottom: '1em' }}>
-                                <button
-                                    onClick={() => handleCopy(codeString)}
-                                    style={{
-                                        position: 'absolute',
-                                        right: '22%',
-                                        top: '10px',
-                                        zIndex: 1,
-                                        background: 'white',
-                                        border: '1px solid #ccc',
-                                        borderRadius: '3px',
-                                        padding: '0.2em 0.5em',
-                                        cursor: 'pointer'
-                                    }}
-                                >
-                                    copy
-                                </button>
-                                <CodeMirror
-                                    value={codeString}
-                                    options={{
-                                        mode: language,
-                                        theme: 'material',
-                                        lineNumbers: true,
-                                        readOnly: 'nocursor'
-                                    }}
-                                    {...props}
-                                />
-                            </div>
-                        ) : (
-                            <code className={className} {...props}>
-                                {children}
-                            </code>
-                        );
-                    },
-                    img({ node, ...props }) {
-                        return <img {...props} style={{ maxWidth: '100%' }} alt={props.alt} />;
-                    }
-                }}
-            />
+        <div style={{display:'flex'}}>
+            <Menu
+                mode="inline"
+                defaultSelectedKeys={['']}
+                style={{ lineHeight: '64px', width: '200px' }}
+                onClick={handleMenuClick}
+            >
+                <SubMenu
+                    title="Quant的一些笼统的笔记"
+                >
+                   <Menu.Item
+                        key="MyFirstQuantNote/Quant_1.md" 
+                    >
+                        Quant_1
+                    </Menu.Item>
+                    <Menu.Item
+                        key="MyFirstQuantNote/Quant_2.md" 
+                    >
+                        Quant_2
+                    </Menu.Item>
+                    <Menu.Item
+                        key="MyFirstQuantNote/Quant_3.md" 
+                    >
+                        Quant_3
+                    </Menu.Item>
+                    <Menu.Item
+                        key="MyFirstQuantNote/Quant_4.md" 
+                    >
+                        Quant_4
+                    </Menu.Item>
+                    <Menu.Item
+                        key="MyFirstQuantNote/Quant_5.md"
+                    >
+                        Quant_5
+                    </Menu.Item>
+                    <Menu.Item
+                        key="MyFirstQuantNote/Quant_6.md"
+                    >
+                        Quant_6
+                    </Menu.Item>
+                    <Menu.Item
+                        key="MyFirstQuantNote/Quant_7.md"
+                    >
+                        Quant_7
+                    </Menu.Item>
+                    <Menu.Item
+                        key="MyFirstQuantNote/Quant_8.md"
+                    >
+                        Quant_8
+                    </Menu.Item>
+                </SubMenu>
+                <Menu.Item 
+                    key="MyFirstQuantNote/Quant_1.md"
+                >
+                    FBDQA课程笔记
+                </Menu.Item>
+                <Menu.Item 
+                    key="MyFirstQuantNote/Quant_1.md"
+                >
+                    ML学习笔记
+                </Menu.Item>
+            </Menu>
+            <Card>
+                <MyReactMarkdown markdown={markdown} noteUrl={noteUrl} />
+            </Card>
+            
         </div>
     );
 }
