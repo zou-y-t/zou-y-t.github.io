@@ -31,23 +31,20 @@ const MyReactMarkdown = ({markdown, noteUrl}) => {
                 const language = match ? match[1] : 'python';
                 let codeString = '';
 
-                if (Array.isArray(children)) {
-                    codeString = children.map((child) => {
-                        if (typeof child === 'string') {
-                            return child;
-                        } else if (typeof child === 'object' && child.props && child.props.children) {
-                            return child.props.children;
-                        }
-                        return '';
-                    }).join('');
-                } else if (typeof children === 'string') {
-                    codeString = children;
-                } else if (typeof children === 'object' && children.props && children.props.children) {
-                    codeString = children.props.children;
+                let result = '';
+                let stack = Array.isArray(children) ? [...children] : [children];
+
+                while (stack.length > 0) {
+                    const child = stack.pop();
+                    if (typeof child === 'string') {
+                        result = child + result;
+                    } else if (typeof child === 'object' && child.props && child.props.children) {
+                        stack = stack.concat(child.props.children);
+                    }
                 }
 
-                const lineCount = codeString.split('\n').length;
-                console.log(lineCount);
+                codeString = result;
+
 
                 return !inline ? (
                     <div style={{ position: 'relative', marginBottom: '1em' }}>
@@ -72,7 +69,6 @@ const MyReactMarkdown = ({markdown, noteUrl}) => {
                             {`
                                 .CodeMirror {
                                     height: auto;
-                                    max-height: ${lineCount * 20 + 20}px;
                                 }
                             `}
                         </style>

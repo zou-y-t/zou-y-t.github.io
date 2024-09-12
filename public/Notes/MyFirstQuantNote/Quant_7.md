@@ -82,7 +82,6 @@ y_pred = clf.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print(f'AdaBoost分类器的准确率: {accuracy}')
 ```
-
 ### 主要步骤和公式
 
 1. **初始化权重**：

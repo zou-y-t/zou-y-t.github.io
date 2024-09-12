@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import MyReactMarkdown from '../Component/MyReactMarkdown';
-import { message, Card, Menu } from 'antd';
+import { Card, Menu } from 'antd';
 
 const { SubMenu } = Menu;
 
 function FunctionPage() {
     const [markdown, setMarkdown] = useState('');
-    const [noteUrl, setNoteUrl] = useState('Notes/MyFirstQuantNote/');
-    const [fileName, setFileName] = useState('Quant_4.md');
+    const [noteUrl, setNoteUrl] = useState('Notes/Welcome/');
+    const [fileName, setFileName] = useState('welcome.md');
 
     useEffect(() => {
         fetch(`${process.env.PUBLIC_URL}/`+noteUrl+fileName)
@@ -81,11 +81,34 @@ function FunctionPage() {
                 >
                     FBDQA课程笔记
                 </Menu.Item>
-                <Menu.Item 
-                    key="MyFirstQuantNote/Quant_1.md"
+                <SubMenu
+                    title='ML学习笔记'
                 >
-                    ML学习笔记
-                </Menu.Item>
+                    <Menu.Item
+                        key="ML/KNN.md"
+                    >
+                        K-Nearest Neighbor(KNN)
+                    </Menu.Item>
+                    <Menu.Item
+                        key="ML/LS.md"
+                    >
+                        Least Square(LS)
+                    </Menu.Item>
+                </SubMenu>
+                <SubMenu
+                    title='Stochastic Process'
+                >
+                    <Menu.Item
+                        key="Stochastic_Process/Class1.md"
+                    >
+                        Class_1
+                    </Menu.Item>
+                    <Menu.Item
+                        key="Stochastic_Process/Class2.md"
+                    >
+                        Class_2
+                    </Menu.Item>
+                </SubMenu>
             </Menu>
             <Card>
                 <MyReactMarkdown markdown={markdown} noteUrl={noteUrl} />
