@@ -1,6 +1,5 @@
 import { useEffect, } from 'react';
 import Papa from 'papaparse';
-import { toByteArray } from 'base64-js';
 
 /**
  * GetDataNyUrl:从一个给定的URL获取数据

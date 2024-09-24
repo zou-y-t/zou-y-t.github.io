@@ -76,11 +76,15 @@ function FunctionPage() {
                         Quant_8
                     </Menu.Item>
                 </SubMenu>
-                <Menu.Item 
-                    key="MyFirstQuantNote/Quant_1.md"
+                <SubMenu 
+                    title='FBDQA课程笔记'
                 >
-                    FBDQA课程笔记
-                </Menu.Item>
+                    <Menu.Item
+                        key="FBDQA_Note/术语介绍.md"
+                    >
+                        术语介绍
+                    </Menu.Item>
+                </SubMenu>
                 <SubMenu
                     title='ML学习笔记'
                 >
@@ -93,6 +97,11 @@ function FunctionPage() {
                         key="ML/LS.md"
                     >
                         Least Square(LS)
+                    </Menu.Item>
+                    <Menu.Item
+                        key="ML/GD.md"
+                    >
+                        Gradient Descent(GD)
                     </Menu.Item>
                 </SubMenu>
                 <SubMenu

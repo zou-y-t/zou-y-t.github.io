@@ -11,7 +11,10 @@ import 'katex/dist/katex.min.css';
 import 'highlight.js/styles/github.css';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 /**
- * 
+ * MyReactMarkdown:一个自定义的ReactMarkdown组件
+ * @param {string} markdown - 一个markdown文本
+ * @param {string} noteUrl - 一个markdown文本的URL地址
+ * @returns {JSX.Element}
  */
 
 const handleCopy = (text) => {
