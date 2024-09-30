@@ -117,6 +117,21 @@ function FunctionPage() {
                     >
                         Class_2
                     </Menu.Item>
+                    <Menu.Item
+                        key="Stochastic_Process/Class3.md"
+                    >
+                        Class_3
+                    </Menu.Item>
+                    <Menu.Item
+                        key="Stochastic_Process/Class4.md"
+                    >
+                        Class_4
+                    </Menu.Item>
+                    <Menu.Item
+                        key="Stochastic_Process/Class5.md"
+                    >
+                        Class_5
+                    </Menu.Item>
                 </SubMenu>
             </Menu>
             <Card>

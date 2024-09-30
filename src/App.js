@@ -32,21 +32,21 @@ const items = [
     icon: <CodeOutlined />,
     key: '/code',
   },
+  // {
+  //   label: 'Settings',
+  //   icon: <SettingOutlined />,
+  //   key: '/settings',
+  // },
   {
-    label: 'Settings',
-    icon: <SettingOutlined />,
-    key: '/settings',
-  },
-  {
-    label: 'function',
+    label: 'Notes',
     icon: <FunctionOutlined />,
     key: '/function',
   },
-  {
-    label: 'User',
-    icon: <UserOutlined />,
-    key: '/user',
-  },
+  // {
+  //   label: 'User',
+  //   icon: <UserOutlined />,
+  //   key: '/user',
+  // },
 ];
 
 function isMobileDevice() {
@@ -92,8 +92,8 @@ const App = () => {
           <Route path="/data" element={<Data />} />
           <Route path="/code" element={<Code />} />
           <Route path="/function" element={<Function />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/user" element={<User />} />
+          {/* <Route path="/settings" element={<Settings />} /> */}
+          {/* <Route path="/user" element={<User />} /> */}
       </Routes>
     </div>
   );
