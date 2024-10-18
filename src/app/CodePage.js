@@ -1,36 +1,15 @@
-import React, { useState, useEffect } from 'react';
-// import logo from '../logo.svg';
+import React, { useState} from 'react';
 import '../App.css';
 import PythonRunnerInput from '../Component/PythonRunnerInput.js';
 import PythonRunnerOutput from '../Component/PythonRunnerOutput.js';
 import PythonRunnerStatus from '../Component/PythonRunnerStatus.js';
 import PythonLib from '../Component/PythonLib.js';
 
-let pyodideInstance = null;
-
-export async function loadPyodideInstance() {
-  if (!pyodideInstance) {
-    pyodideInstance = await window.loadPyodide({
-      indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.18.1/full/'
-    });
-  }
-  return pyodideInstance;
-}
-
-function CodePage() {
+function CodePage({ pyodide }) {
   const [output, setOutput] = useState('');
   const [outputImg, setOutputImg] = useState('');
   const [status, setStatus] = useState('');
-  const [pyodide, setPyodide] = useState(null);
   const [isError, setIsError] = useState(false);
-
-  useEffect(() => {
-    const initializePyodide = async () => {
-      const pyodideInstance = await loadPyodideInstance();
-      setPyodide(pyodideInstance);
-    };
-    initializePyodide();
-  }, []);
 
   const handleOutputChange = (newOutput) => {
     setOutput(newOutput);
@@ -51,7 +30,6 @@ function CodePage() {
   return (
     <div className="App">
       <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
         <br/>
         <img 
           src="websiteIcon.png"  

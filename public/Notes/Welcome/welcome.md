@@ -1,3 +1,3 @@
-# This is a Note Page
+# Green Book Notes
 
 ---

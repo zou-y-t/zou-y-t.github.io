@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-  SettingOutlined,
   HomeOutlined,
   DatabaseOutlined,
   CodeOutlined,
-  UserOutlined,
   FunctionOutlined,
 } from '@ant-design/icons';
 import { Menu } from 'antd';
@@ -14,8 +12,7 @@ import Home from './app/HomePage';
 import Data from './app/DataPage';
 import Code from './app/CodePage';
 import Function from './app/FunctionPage';
-import Settings from './app/SettingsPage';
-import User from './app/UserPage';
+
 const items = [
   {
     label: 'Home',
@@ -32,42 +29,60 @@ const items = [
     icon: <CodeOutlined />,
     key: '/code',
   },
-  // {
-  //   label: 'Settings',
-  //   icon: <SettingOutlined />,
-  //   key: '/settings',
-  // },
   {
     label: 'Notes',
     icon: <FunctionOutlined />,
     key: '/function',
   },
-  // {
-  //   label: 'User',
-  //   icon: <UserOutlined />,
-  //   key: '/user',
-  // },
 ];
 
-function isMobileDevice() {
-  return /Mobi|Android/i.test(navigator.userAgent);
+let pyodideInstance = null;
+let pyodideLoadingPromise = null;
+
+export async function loadPyodideInstance() {
+  if (!pyodideInstance && !pyodideLoadingPromise) {
+    pyodideLoadingPromise = window.loadPyodide({
+      indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.18.1/full/'
+    }).then(instance => {
+      pyodideInstance = instance;
+      pyodideLoadingPromise = null;
+      return pyodideInstance;
+    });
+  }
+  return pyodideLoadingPromise || pyodideInstance;
 }
+
+const isMobileDevice = () => {
+  return /Mobi|Android/i.test(navigator.userAgent);
+};
 
 const App = () => {
   const isMobile = isMobileDevice();
   const [animalIndex, setAnimalIndex] = useState(Math.floor(Math.random() * 7));
   const [current, setCurrent] = useState('/');
+  const [pyodide, setPyodide] = useState(null);
+
+  useEffect(() => {
+    const initializePyodide = async () => {
+      const pyodideInstance = await loadPyodideInstance();
+      setPyodide(pyodideInstance);
+    };
+    initializePyodide();
+  }, []);
+
   const onClick = (e) => {
     console.log('click ', e);
     if (e.key === '/') {
       const timestamp = Date.now();
-      setAnimalIndex((timestamp) %7);
+      setAnimalIndex((timestamp) % 7);
     }
     setCurrent(e.key);
     navigate(e.key);
   };
+
   const navigate = useNavigate();
-  return(
+
+  return (
     <div style={{ position: 'relative' }}>
       <Menu 
         onClick={onClick} 
@@ -84,19 +99,17 @@ const App = () => {
           navigate('/');
           setCurrent('/');
           const timestamp = Date.now();
-          setAnimalIndex((timestamp) %7);
+          setAnimalIndex((timestamp) % 7);
         }}
       />
       <Routes>
-          <Route path="/" element={<Home animalIndex={animalIndex} isMobile={isMobile}/>} />
-          <Route path="/data" element={<Data />} />
-          <Route path="/code" element={<Code />} />
-          <Route path="/function" element={<Function />} />
-          {/* <Route path="/settings" element={<Settings />} /> */}
-          {/* <Route path="/user" element={<User />} /> */}
+        <Route path="/" element={<Home animalIndex={animalIndex} isMobile={isMobile} />} />
+        <Route path="/data" element={<Data />} />
+        <Route path="/code" element={<Code pyodide={pyodide} />} />
+        <Route path="/function" element={<Function pyodide={pyodide} />} />
       </Routes>
     </div>
   );
-  
 };
+
 export default App;
