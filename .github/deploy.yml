@@ -1,4 +1,4 @@
-<code class="language-yaml">name: Deploy
+name: Deploy
  
 on:
   push:
