@@ -1,3 +1,0 @@
-# Green Book Notes
-
----
