@@ -1,5 +1,6 @@
 {
   "name": "phi-3.5-webgpu",
+  "homepage": "./",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,6 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "yarn dev",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@huggingface/transformers": "3.0.0",
