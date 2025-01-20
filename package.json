@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "yarn dev",
-    "deploy": "gh-pages -d dist --dest .gh-pages-cache"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@huggingface/transformers": "3.0.0",
